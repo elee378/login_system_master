@@ -1,2 +1,3 @@
 https://www.youtube.com/watch?v=xb8aad4MRx8
 http://phppot.com/php/php-login-script-with-session/
+https://www.experts-exchange.com/questions/25477393/php-block-login-for-15-minutes-after-3-failed-attempts.html
