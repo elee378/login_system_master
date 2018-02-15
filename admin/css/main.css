@@ -1,0 +1,42 @@
+label, input {
+	font-family: "Roboto";
+	color: black;
+}
+
+label {
+	display: block;
+	margin: auto;
+    width: 50%;
+    padding: 10px;
+    text-align: center;
+}
+
+input {
+	width: 50%;
+	padding: 12px 20px;
+    display: block;
+	margin: auto;
+    width: 50%;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+input[type=submit] {
+	background-color: #3CBC8D;
+}
+
+.login_con{
+	display: block;
+	margin: auto;
+    width: 50%;
+    padding: 10px;
+    background-color: #2e2e51;
+}
+
+.sign_up{
+	font-family: "Roboto";
+	display: block;
+	margin: auto;
+    width: 50%;
+    padding: 10px;
+}

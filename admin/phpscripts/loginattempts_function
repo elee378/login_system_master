@@ -1,0 +1,90 @@
+<?php
+session_start();
+require_once('connect.php');
+
+//get ip address
+$ip=$_SERVER['REMOTE_ADDR'];
+
+//get current time   
+$today=date("d/m/y H:i:s"); 
+
+//get username and password from form
+$login =  $_POST['user_name'];
+$password = $_POST['user_pass'];
+
+//check if ip address has been used before
+$checkip=mysqli_query("SELECT * FROM tbl_user WHERE user_ip='$ip'");
+$row=mysqli_fetch_array($checkip);
+$ipaddress=$row['user_ip'];  
+$previousattempts=$row['user_attempts'];
+
+
+//variables to be used to set number of attempts  
+$currentattempt = $previousattempts + 1;
+$successfullogin = 0;
+$firstattempt = 1;
+
+//if ip address is not used before
+if($ipaddress !=$ip)
+{
+    //add new ip address to database
+    mysqli("INSERT INTO user_login_attempts (user_ip, user_attempts, user_date) VALUES('$ip','$firstattempt', '$today')");
+    mysqli_close();
+
+    // check login details
+    if (isset($_POST['user_name']) && isset($_POST['user_password']))
+    {
+        //code for checking login details is here
+    }
+
+            //on successful login set attempts to 0 and direct to members page
+            @mysqli_query("UPDATE user_login_attempts SET user_attempts = '$successfullogin', user_date = '$today' WHERE user_ip = '$ip' ");
+            mysqli_close(); 
+                
+            @header("location: admin_index.php");
+        }
+    }
+    else //if login failed
+    {
+        //redirect to login failed page
+        @header("location: login_failed.php");
+    }
+}
+
+else  //if ip address is found in database
+{ 
+    //check if number of attempts is < 3
+    if ($row['user_attempts'] < 3)
+    {
+        // check login details
+        if (isset($_POST['user_name']) && isset($_POST['user_password']))
+        {
+      //code for checking login details is here
+        }
+
+
+                //on successful login set attempts to 0 and direct to members page
+                @mysqli_query("UPDATE user_login_attempts SET user_attempts = '$successfullogin', user_date = '$today' WHERE user_ip = '$ip' ");
+                mysqli_close(); 
+                
+                @header("location: admin_index.php");
+            }
+            else // failed login - add 1 to number of attempts
+            {
+                @mysqli_query("UPDATE user_login_attempts SET user_attempts = '$currentattempt', user_date = '$today' WHERE user_ip = '$ip' ");
+                mysqli_close(); 
+        
+            //redirect to login failed page
+            @header("location: login_failed.php");  
+            }
+        } 
+    }
+    else  //failed login - add 1 to number of attempts
+    {
+        @mysqli_query("UPDATE login_attempts SET attempts = '$currentattempt', date_last_use = '$today' WHERE IpAddress = '$ip' ");
+        mysqli_close(); 
+        //redirect to login failed page
+        @header("location: login-failed.php");  
+    }
+}
+?>
