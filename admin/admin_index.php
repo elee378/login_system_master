@@ -13,13 +13,13 @@
 <body>
 	<?php
 	  	if($_SESSION['current_hour'] <= "11") {
-	    	$greeting = "Good morning ";
+	    	$greeting = "It is morning time";
 
 	  	}elseif($_SESSION['current_hour'] >= "12" && $_SESSION['current_hour'] <= "16") { 
-	   		$greeting = "Good afternoon ";
+	   		$greeting = "It is the afternoon";
 	   		
 	  	}elseif($_SESSION['current_hour'] >= "17") { 
-	    	$greeting = "Good evening ";
+	    	$greeting = "It is now night";
 	  	}
 	?>
 	<div>
